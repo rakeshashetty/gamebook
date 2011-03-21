@@ -1,0 +1,39 @@
+<div id="header">
+  <p class="leftalign">Define Course </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="text_box_design">
+<table>
+ <%if @games %>
+  <tr>
+    <th colspan="5">Games Played</th>
+  </tr>
+  <tr>
+    <th>Join Id</th>
+    <th>Name</th>
+    <th>Status</th>
+    <th>On</th>
+    <th></th>
+  </tr>
+<% @games.each do |game| %>
+  <tr>
+    <td><%= game.id %></td>
+    <td><%= game.course.name %></td>
+    <td><%= game.status %></td>
+    <td><%= game.created_at.strftime('%b %d, %Y') %></td>
+    <td><%= link_to_function 'Scores',"new_score_show("+game.id.to_s+",'"+game.updated_at.to_s+"')" %></td>
+  </tr>
+ <% end %>
+<%else%>
+  <tr><th colspan="5">Sorry !!! No Games to Join</th></tr>
+<%end%>
+</table>
+ </div>
+
+</div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to_function "Back","check_back_button('courses')", {:class =>"back_button" } %></p>
+</div>
+
+

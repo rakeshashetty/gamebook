@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  club: MyString
+  name: MyString
+  country: MyString
+  state: MyString
+  city: MyString
+  holes: 1
+  par: 1
+
+two:
+  club: MyString
+  name: MyString
+  country: MyString
+  state: MyString
+  city: MyString
+  holes: 1
+  par: 1

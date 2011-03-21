@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html manifest="application.manifest">
+<head>
+  <title>Game Book</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0" />
+  <%= stylesheet_link_tag 'application','touchscroll'%>
+  <%= javascript_include_tag 'jquery','application','touchscroll','jquery.custom.min','jquery.flip.min','offlinedb'%>
+  <%= csrf_meta_tag %>
+</head>
+  <body>
+    <div id="container">
+     <%=yield%>
+    </div>
+  </body>
+</html>
+
+
+
+

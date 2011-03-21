@@ -1,0 +1,51 @@
+<div id="header">
+  <p class="leftalign">Define Course </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="text_box_design" id="main_container">
+    <%= form_for(@course) do |f| %>
+      <% if @course.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+          <ul>
+            <% @course.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <table id="course_detail_form">
+        <tr><th colspan="2">Create New Course</th></tr>
+        <tr><td><%= f.text_field :club ,:placeholder => 'Club'  %></td></tr>
+        <tr><td><%= f.text_field :name , :placeholder => 'Name' %></td></tr>
+        <tr><td><%= f.select(:country_id,get_dropdown_options(@countries),{},{:class=>'dropdown'})%></td></tr>
+        <tr><td><%= f.select(:state_id,get_dropdown_options(@states),{},{:class=>'dropdown',:disabled=>true})%></td></tr>
+        <tr><td><%= f.select(:city_id,get_dropdown_options(@cities),{},{:class=>'dropdown',:disabled=>true})%></td></tr>
+        <tr><td><%= f.select(:holes,[['Select Holes',0],['9',1],['18',2]],{},{:class=>'dropdown'}) %></td></tr>
+        <tr><td><%= f.text_field :par,:placeholder => 'Par' %></td></tr>
+      </table>
+      <div id="other_course_detail_form" style="display: none">
+        <%= render :partial => 'add_more_course_details',:locals => {:f => @course} %>
+      </div>
+      <div id="other_course_detail_form2" style="display: none">
+      </div>
+   </div>
+  <div id="help_info" class="align_content_screen text_box_design hidden">
+     <p>
+       <h2>Create New Course</h2>
+       <h4> Enter your Club and your name,<br/>select country , Enter state and city,<br/>Select particular number of holes ( 9 or 18) and Enter Par. </h4>
+       <h4> Enter Enter Par value , mens Hcp and ladies Hcp<br/>select country , enter state and city,<br/>Select particular number of holes ( 9 or 18) and enter Par<br/>Press<b> back</b> for going to previous page , Press <b>Save</b> to save the Information.  </h4>
+       <h4> Enter Enter Par value , mens Hcp and ladies Hcp<br/>select country , enter state and city,<br/>Select particular number of holes ( 9 or 18) and enter Par<br/>Press<b> back</b> for going to previous page , Press <b>Continue </b> to go to next Form.  </h4>
+    </p>
+   </div>
+ </div>
+  <div id="footer">
+    <p class="leftalign" ><%= link_to_function "Back","check_back_button('/')", {:id => "back_button",:class =>"back_button" } %><%= link_to_function "Back","back_to_course_detail()", :id => "virtual_back_button",:class =>"back_button hidden"  %></p>
+<p class="rightalign" >
+      <%= f.submit 'Save',:class =>'hide_button'%>
+      <%= link_to_function "Save","save_course_detail()", :id => "s_button",:class =>'hide_save_button submit_button'%>
+      <%= link_to_function "Continue","add_more_course_detail(#{@course.id ? @course.id : nil})", :id => "hide_continue_button",:class =>"button"  %>
+    </p>
+  <% end %>
+</div>

@@ -1,0 +1,68 @@
+
+<div id="header">
+  <p class="leftalign">GameBook</p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %><a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="list_view_design" id="main_container">
+    <p id="new_game" class="link_list">New Game</p>
+    <p id="join_game" class="link_list">Join Game</p>
+    <p id="my_games" class="link_list">My Games</p>
+    <p id="game_book_club_house" class="link_list">Game Book Club House</p>
+  </div>
+  <div id="help_info" class="align_content_screen text_box_design hidden">
+     <p>
+     <h2> Home Menu</h2>
+     <h4> GameBook is the ultimate golf scoring application for the iPhone.<br/> You can now get real-time scoring for multi-group rounds or <br/> you can use the GameBook for regular scorekeeping, contests and side games. <br/> To setup a game,you must select <b> Create New Game.</b><br/> Then you can either use a previously played as a template or<br/> create a new blank game. After naming your game (so you can find it later) and your group(eg. your name).<br/>you are ready for the game setup selections.Here you get a <b>Join Code </b> for other groups(iPhones) to your game.
+           </h4>
+    </p>
+   </div>
+</div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to_function "Back","check_back_button('/')", {:class =>"back_button" } %></p>
+  <p class="rightalign" ><%= link_to "Continue",login_path, {:class =>"button" } %></p>
+</div>
+
+<script type="text/javascript">
+  store_login_offline('<%=self.current_user.login%>')
+  
+if(isOnline()){
+  <%@selected_game.each do |game|%>
+     db.transaction(
+        function(tx){
+                tx.executeSql('SELECT * from games where game_id=?',
+                [<%=game.id%>],
+                function(tx,results){
+                  if(results.rows.length==0){
+                    tx.executeSql('INSERT INTO GAMES(user_name,group_name,course_name,no_of_holes,course_id,user_id,group_id,game_id,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?);',
+                    ['<%= game.user.login%>','<%=game.group.name%>','<%=game.course.name%>','<%=game.course.holes%>',<%=game.course_id%>,<%=game.user_id%>,<%=game.group_id%>,<%=game.id%>,<%=game.status%>,'<%=game.created_at %>','<%=game.updated_at %>']
+                    );
+                  }
+            });
+      });
+  
+  
+      db.transaction(
+      function(tx) {
+	tx.executeSql('SELECT * from score where game_id=?;',
+	[<%=game.id%>],
+	function(tx,results){
+          <%@score=Score.find(:all,:conditions =>["game_id = ?",game.id])%>
+          <%if @score %>
+	    <% @score.each do |s| %>
+	        if(results.rows.length == 0){
+	            tx.executeSql('INSERT INTO SCORE(score_id,game_id,user_id,user_name,course_hole_id,par,score,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?);',
+	          [<%=s.id%>,<%=s.game_id%>,<%=s.user_id%>,'<%=s.user.login%>',<%=s.course_hole_id%>,<%=s.course_hole.par%>,<%=s.score%>,'<%=s.created_at%>','<%=s.updated_at%>']
+                  );
+                 }
+	    <% end %>
+	  <% end %>
+	  
+       }
+     );
+    });
+ <%end%>
+ 
+}
+
+</script>

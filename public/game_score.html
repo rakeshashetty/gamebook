@@ -1,0 +1,142 @@
+<html><head>
+  <title>Game Book</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0">
+  <link href="/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/stylesheets/touchscroll.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="/javascripts/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/application.js" type="text/javascript"></script>
+<script src="/javascripts/touchscroll.js" type="text/javascript"></script>
+<script src="/javascripts/jquery.custom.min.js" type="text/javascript"></script>
+<script src="/javascripts/jquery.flip.min.js" type="text/javascript"></script>
+<script src="/javascripts/offlinedb.js" type="text/javascript"></script>
+<script src="/javascripts/jquery.offline.js" type="text/javascript"></script>
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="7m7NPxFvd/xUcqYKN2Tr9xBu1J1oBQuVQwpEOiHWV3w=">
+</head><body>
+    <div id="container">
+     <div id="header">
+  <p class="leftalign">Score Card</p>
+  <p class="rightalign"><a href="#" class="button button_style rounded">?</a>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content" style="position: relative; height: 277px; " class=" touchScroll"><div style="pointer-events: none; -webkit-transition-property: opacity; -webkit-transition-duration: 250ms; opacity: 0; height: 277px; " class="touchScrollBars"><div class="touchScrollTrack touchScrollTrackX" style="display: none; "><div class="touchScrollHandle" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; width: 25px; "></div></div><div class="touchScrollTrack touchScrollTrackY" style="display: none; "><div class="touchScrollHandle" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; height: 25px; "></div></div></div><div style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; "><div class="touchScrollInner" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; display: inline-block; min-width: 100%; -webkit-box-sizing: border-box; ">
+<form accept-charset="UTF-8" action="/scores" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="7m7NPxFvd/xUcqYKN2Tr9xBu1J1oBQuVQwpEOiHWV3w="></div>
+<div id="score_table_header">
+  <table cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr><th>STROKE-PLAY : </th></tr>
+        <tr><th>Individual-HCP</th></tr>
+  </tbody></table>
+</div>
+<div id="score_table_content" class=" touchScroll" style="position: relative; "><div style="pointer-events: none; -webkit-transition-property: opacity; -webkit-transition-duration: 250ms; opacity: 0; height: 186px; " class="touchScrollBars"><div class="touchScrollTrack touchScrollTrackX" style="display: none; "><div class="touchScrollHandle" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; width: 25px; "></div></div><div class="touchScrollTrack touchScrollTrackY" style="display: none; "><div class="touchScrollHandle" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; height: 25px; "></div></div></div><div style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; "><div class="touchScrollInner" style="-webkit-transform-style: preserve-3d; -webkit-transition-property: -webkit-transform; display: inline-block; min-width: 100%; -webkit-box-sizing: border-box; ">
+ <table cellpadding="0" cellspacing="0">
+     <tr><td></td>
+     </tr>
+ </table>
+</div></div></div>
+</form></div></div></div>
+<div id="footer">
+  <input id="game_id" name="game_id" type="hidden" value="7">
+  <p class="leftalign"><a href="game_screen.html" class="back_button">Back</a></p>
+  <p class="rightalign"><a class="button" href="#" id="score_save_id" onclick="check_score_save(getStorage('currentGameId')); return false;">Save</a></p>
+</div>
+
+<script type="text/javascript">
+ /* if(isOnline()){
+      var game_id=getStorage('currentGameId');
+    db.transaction(
+    function(tx) {
+      tx.executeSql('SELECT * FROM SCORE WHERE game_id = ?;',
+      [game_id]
+      ,function(tx,results){
+
+        for(i=0;i<=results.rows.length;i++){
+           row=1;
+           if(i!=0){
+            if(results.rows.item(i-1).user_id != results.rows.item(i).user_id){
+              j=1;
+              row++;
+             }
+           }
+
+//          <tr><td><a href="/scores/new" class="player_button">Shreyas</a></td></tr>
+          $('#score_'+row+'_'+j+'_').attr("value",results.rows.item(i).score);
+        }
+      }
+    );
+    });
+  }*/
+    var game_id=getStorage('currentGameId');
+    db.transaction(
+        function(tx) {
+
+            tx.executeSql('SELECT distinct user_name FROM SCORE WHERE game_id=? ORDER BY user_name;',[game_id],
+            function(tx,user_results){
+                if(user_results.rows.length>0)
+                {
+                    for(i=0;i<=user_results.rows.length-1;i++)
+                        {
+                            $('#score_table_header table tbody').append('<tr><td><a href="/scores/new" class="player_button">'+ user_results.rows.item(i).user_name +'</a></td></tr>');
+                        }
+
+                      /*dynamic generation of no of holes*/
+                      tx.executeSql('SELECT no_of_holes FROM GAMES WHERE game_id=?;',[game_id],
+                      function(tx,results){
+                              if(results.rows.item(0).no_of_holes==2) iterate=18;
+                              else iterate=9;
+                              var create_tag = "<tr>";
+                              for(i=1;i<=iterate;i++){
+                                  create_tag = create_tag + "<th>"+i+"</th>";
+                              }
+                              create_tag = create_tag + "</tr>";
+                              $('#score_table_content table tbody').append(create_tag);
+                              }
+                      );
+
+                      /*dynamic generation of par values*/
+                      tx.executeSql('SELECT par FROM SCORE WHERE game_id=? and user_name=?;',[game_id,user_results.rows.item(i-1).user_name],
+                      function(tx,results){
+                          if(results.rows.length>0){
+                              //$('#score_table_content table tbody').append('<tr>');
+                              var par;
+                              var create_tag = "<tr>";
+                              for(i=0;i<=results.rows.length-1;i++){
+                                  if(results.rows.item(i).par=='undefined'){
+                                           par = 0;
+                                      }
+                                  else par =results.rows.item(i).par;
+                                  create_tag = create_tag + "<th>Par : "+par+"</th>";
+                              }
+                              create_tag = create_tag + "</tr>";
+                              $('#score_table_content table tbody').append(create_tag);
+                          }
+
+                      }
+                      );
+
+                      /*dynamic generation of players*/
+                      for(i=0;i<=user_results.rows.length-1;i++){
+                            tx.executeSql('SELECT score,user_id,course_hole_id,user_name FROM SCORE WHERE game_id=? and user_name = ? ORDER BY user_name;',[game_id,user_results.rows.item(i).user_name],
+                                   function(tx,results){
+                                       if(results.rows.length>0){
+                                            var create_tag = "<tr>";
+                                            for(j=0;j<=results.rows.length-1;j++){
+                                                 create_tag = create_tag + "<th><input id=\"score_"+results.rows.item(j).user_id+"_"+(j+1)+"_\" name=\"score["+results.rows.item(j).user_id+"]["+(j+1)+"][]\" size=\"7\" type=\"text\" value=\""+results.rows.item(j).score+"\"></th>";
+                                              }
+                                            create_tag = create_tag + "</tr>";
+                                           $('#score_table_content table tbody').append(create_tag);
+                                       }
+                                   }
+                                   );
+                              }
+
+                      }
+
+            }
+            );
+
+
+        });
+
+</script>
+    </div>
+</body></html>

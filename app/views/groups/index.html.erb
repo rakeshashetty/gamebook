@@ -1,0 +1,28 @@
+<div id="header">
+  <p class="leftalign">Define Game </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="text_box_design">
+    <table>
+      <tr>
+	<th>Select Group</th>
+	<th></th>
+      </tr>
+      <% @groups.each do |group| %>
+	<tr>
+	  <td><%= group.name %></td>
+	  <td><%= link_to 'Show', group %>
+	    <% if @course %>
+	      | <%= link_to 'Start Game',add_group_to_game_group_path(group,:course_id => @course) %></td>
+	  <% end %>
+	</tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+  <div id="footer">
+    <p class="leftalign" ><%= link_to "Back",courses_path, {:class =>"back_button" } %></p>
+    <p class="rightalign" ><%= link_to_function "New Group",'redirect_to_path("/groups/new")', { :class =>"button" } %></p>
+  </div>
+

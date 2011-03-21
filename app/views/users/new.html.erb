@@ -1,0 +1,33 @@
+<div id="header">
+  <p class="leftalign">Register</p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+    <% @user.password = @user.password_confirmation = nil %>
+    <%= error_messages_for :user %>
+    <%= form_for :user, :url => users_path do |f| -%>
+     <table class="text_box_design" id="main_container">
+       <tr><td><%= f.text_field :first_name ,:placeholder => 'First name'%></td></tr>
+       <tr><td><%= f.text_field :last_name ,:placeholder => 'Last name'%></td></tr>
+       <tr><td><%= f.text_field :email ,:placeholder => 'Email'%></td></tr>
+       <tr><td><%= f.text_field :login ,:placeholder => 'Username'%></td></tr>
+       <tr><td><%= f.select(:country_id,get_dropdown_options(@countries),{},{:class=>'dropdown'})%></td></tr>
+       <tr><td><%= f.text_field :handicap ,:placeholder => 'Handicap'%></td></tr>
+       <tr><td><%= f.select(:gender,[['Select Gender',true],['Male',true],['Female',false]],{},{:class=>'dropdown'}) %></td></tr>
+       <tr><td><%= f.select(:privacy,[['Select Privacy',false],['Public',false],['Private',true]],{},{:class=>'dropdown'}) %></td></tr>
+       <tr><td><%= f.password_field :password ,:placeholder => 'Password'%></td></tr>
+       <tr><td><%= f.password_field :password_confirmation ,:placeholder => 'Re-Enter Password'%></td></tr>
+       <tr><td><%= label_tag(:terms ,"I Accept to the terms and conditions")%> <%= select_tag(:terms,options_for_select([['No',1],['Yes',2]],1))%></td></tr>
+     </table>
+  <div id="help_info" class="align_content_screen text_box_design hidden">
+     <p>
+       <h2>Register</h2>
+       <h4>  To use GameBook you needs to register for a <b> free </b> <b>Register</b> account.<br/> Please provide your first and last names,a valid email address and a unique username,<br />select your home country, enter your exact handicap,<br />select your gender and the privacy setting.<br />  <b> Public </b> profiles are open for everyone to see, and to -for example - link people to your online scorecards at www.golfgamebook.com.<br /> <b> Private </b> profiles are only available to your GameBook friends. if you meet on the course before the game,<br /> private profiles can be trickly to pair up in a game.Be bold-be public! <br/>  type your password and re-enter for confirmation and select your for accept Terms and Condition. </h4>
+     </p>
+   </div>
+ </div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to "Back",login_path, {:class =>"back_button" } %></p>
+  <p class="rightalign" ><%= f.submit 'Done',:class => 'hide_save_button'%><%= link_to_function "Save","validate_new_user()",:class =>"button"%></p>
+<% end -%>
+</div>

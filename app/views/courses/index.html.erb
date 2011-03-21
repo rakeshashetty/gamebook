@@ -1,0 +1,33 @@
+<div id="header">
+  <p class="leftalign">Define Game </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="text_box_design" id="main_container">
+<table>
+  <tr>
+    <th>Select Course</th>
+    <th></th>
+  </tr>
+
+<% @courses.each do |course| %>
+  <tr class="select_record_from_table">
+    <td><%= course.club %></td>
+    <td><%= link_to 'View Details',course_path(course.id) %> | <%= link_to 'Select',groups_path(:course_id => course.id) %></td>
+
+  </tr>
+<% end %>
+</table>
+
+
+ </div>
+  <div id="help_info" class="align_content_screen text_box_design hidden">
+     <p><h2> Create New Game</h2>
+     <h4> Create a new game or if you have already some <br/> GameBook games.use a past game as a template.<br/><br/>Using a past game as a templates. you will have the courses, <br/> players,primary and side games(not contests or wagers) ready according to the selected game.<br/>You can modify the settings from Game Setup menu any way you like. </h4>
+    </p>
+   </div>
+</div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to_function "Back","check_back_button('welcome')", {:class =>"back_button" } %></p>
+  <p class="rightalign" ><%= link_to "New Course",new_course_path, { :class =>"button" } %></p>
+</div>

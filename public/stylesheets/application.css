@@ -1,0 +1,203 @@
+html,body,p,a,ul,li{
+    padding: 0px;
+    margin: 0px;
+    font: bold 12px Helvetica;
+    color: white;
+}
+
+/* Header and Footer Setup */
+#container{
+    width:100%;
+}
+
+#header p,#footer p {
+    color: greenyellow;
+    font-size: 20px;
+    text-shadow: 0 2px 2px green;
+    display: inline-block;
+    width: 46%;
+    height:40px;
+}
+
+#header,#footer {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: 1px solid #000;
+    height:50px;
+    width:100%;
+    background: url(/images/toolbar.png) #000000 repeat-x;
+
+}
+
+.leftalign {
+    padding: 10px 0px 0px 10px;
+}
+
+.rightalign {
+    text-align: right;
+    padding: 10px 10px 0px 0px;
+}
+
+/* Header Title */
+h3{
+    border-bottom:2px solid greenyellow;
+    text-align: left;
+}
+
+/* Content Settings */
+#content {
+    background: -moz-linear-gradient(top, #333, #5e5e65);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#5e5e65));
+    text-align: left;
+    overflow: hidden;
+}
+
+/* Login at the center */
+.vertical_align_center{
+    position: relative;
+    top: 20%;
+    text-align: center;
+}
+
+.text_box_design input{
+    line-height: 20px;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: 1em;
+    margin-bottom: 3px;
+}
+
+/* alignment for other screen */
+.align_content_screen{position: relative; }
+
+/* CSS for buttons*/
+.button,.back_button,.submit_button{
+    color: #fff;
+    -webkit-border-image: url(/images/button.png) 0 5 0 5;
+    -moz-border-image: url(/images/button.png) 0 5 0 5;
+    text-decoration:none;
+    text-align: center;
+    line-height: 30px;
+    padding:5px;
+}
+
+.back_button {
+    left: 6px;
+    right: auto;
+    max-width: 55px;
+    border-width: 0 8px 0 14px;
+    -webkit-border-image: url(/images/back_button.png) 0 8 0 14;
+    -moz-border-image: url(/images/back_button.png) 0 8 0 14;
+}
+
+.player_button {
+    width: 130px;
+    line-height: 24px;
+}
+
+.submit_button{
+    font-weight: bold;
+    line-height: 18px;
+}
+
+/** CSS for Table **/
+table{
+    background-color:#303030 ;
+    width:100%;
+}
+
+table tr{
+    border-bottom:1px solid black;
+    text-align:left;
+    color:white;
+    line-height:28px;
+
+}
+
+table tr th{
+
+    font-size:15px;
+    background-color: #080000;
+}
+
+table tr td a{
+    text-decoration:none;
+    color:white;
+}
+
+/* Design of Score Table */
+#score_content{
+    background: -moz-linear-gradient(top, #333, #5e5e65);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#5e5e65));
+    width:100%;
+}
+
+#score_table_header{
+    width:22%;
+    float:left;
+    background-color:#FFFFCC;
+
+}
+
+#score_table_header table tr th{
+    border-bottom :black;
+}
+
+#score_table_header table tr td{
+    border-bottom :black;
+}
+
+#score_table_content{
+    width:78%;
+    overflow: scroll;
+    float:left;
+}
+
+/* ListView Design */
+.list_view_design p {
+    background-color:#303030 ;
+    color:white;
+    border-bottom:1px solid white;
+    text-align: left;
+    padding-left: 5px;
+}
+
+/*Used to hide a div */
+.hidden{  display:none; }
+
+
+.dropdown{
+    width:178px;
+    height:26px;
+}
+
+
+/*Used to hide save and back button */
+.hide_save_button, .hide_button{ display:none; }
+
+
+/* Design of Course Hole Screen */
+.course_hole_header{
+  float:left;
+  line-height: 23px;
+  width:30%
+}
+
+.course_hole_list{
+  float:left;
+  width:7%;
+}
+
+#virtual_back_button{   display:none; }
+
+/* Error Msg */
+.error{
+    color:red;
+    text-align: center;
+}
+.link_list {
+    text-decoration: none;
+    text-align: center;
+    font-size:17px;
+    line-height: 45px;
+}
+

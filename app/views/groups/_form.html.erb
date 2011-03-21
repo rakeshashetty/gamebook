@@ -1,0 +1,35 @@
+<div id="header">
+  <p class="leftalign">Define Course </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+      <h2 id="content_header">Create Group</h2>
+    <div class="text_box_design">
+  <%= form_for(@group) do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+      <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+     <%= f.label :name %>&nbsp;<%= f.text_field :name, :placeholder=>"Group name"%>
+
+    <fieldset>
+      <legend>Select group members</legend>
+        <% @users.each do |user| -%>
+        <%= check_box_tag "group[user_ids][]",user.id, group_contains_user?(user) -%> <%= user.login -%><br />
+        <%  end %>
+    </fieldset>
+  </div>
+</div>
+  </div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to "Back", groups_path, :class =>"back_button" %></p>
+  <p class="rightalign" ><%=  link_to_function "save", "check_group_field()", :class =>"button"%></p>
+<% end %>
+</div>

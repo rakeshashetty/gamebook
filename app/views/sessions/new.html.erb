@@ -1,0 +1,35 @@
+ <div id="header">
+  <p class="leftalign">Game Book</p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="vertical_align_center text_box_design" id="main_container">
+   <%= form_tag session_path do -%>
+      <p><div class="error"><%= flash[:error] %></div></p>
+      <p><%= text_field_tag 'login', @login ,:placeholder => 'Login Name'%></p>
+      <p><%= password_field_tag 'password', nil ,:placeholder => 'Password'%></p>
+
+      <!-- Uncomment this if you want this functionality
+      <p><%= label_tag 'remember_me', 'Remember me' %>
+      <%= check_box_tag 'remember_me', '1', @remember_me %></p>
+      -->
+      <p> <%= link_to_function "Log in","validate_login()" ,{:class =>"button", :id => "login_button" }  %></p>
+    <% end -%>
+  </div>
+   <div id="help_info" class="align_content_screen text_box_design hidden">
+     <p><h2>Welcome to GameBook!</h2>
+     <h4> 
+          <b> O </b>stands for online.<br />
+          <b> ! </b>stands for offline.<br />
+          <b> Sign In </b> using your GameBook username and password.<br />
+          <b> Register</b> a new user.<br />
+          <b> Play golf</b> without registering, by creating a new game or by joining a game with a <b> join code</b>.<br />
+          Open the subscription store to extend your subscription(tap the $ sign).<br />
+          For more information, visit www.golfgamebook.com </h4>
+    </p>
+   </div>
+</div>
+<div id="footer">
+  <p class="leftalign" ><%= link_to_function "Register","register_screen()", { :title => "Register",:class =>"button" } %></p>
+  <p class="rightalign" ><%= link_to_function "Play Golf","join_a_game()", { :title => "Play Golf",:class =>"button" } %> </p>
+</div> 

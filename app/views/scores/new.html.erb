@@ -1,0 +1,84 @@
+<div id="header">
+  <p class="leftalign">Score Card</p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+<%= form_tag :action => 'create' do %>
+<div id="score_table_header">
+  <table cellpadding="0" cellspacing="0">
+    <tr><th>STROKE-PLAY : </th></tr>
+    <tr><th>Individual-HCP</th></tr>
+    <% @get_players.each do |gp| %>
+       <tr><td><%=link_to gp.login.capitalize,nil,{:class =>"player_button" }  %></td></tr>
+    <%end%>
+  </table>
+</div>
+<div id="score_table_content">
+ <table cellpadding="0" cellspacing="0">
+  <tr>
+    <% @get_course.each do |gc| %>
+       <th><%= gc.name %></th>
+    <% end %>
+   </tr>
+  <tr>
+    <% @get_course.each do |gc| %>
+     <th>Par :<%= gc.par %></th>
+    <% end %>
+  </tr>
+
+  <% @get_players.each do |gp| %>
+  <tr>
+    <% @get_course.each do |gc| %>
+     <td><%=  text_field ("score["+gp.id.to_s+"]["+gc.id.to_s+"]").to_sym ,nil,{:value => get_score(@selected_game.id,gc.id,gp.id) ,:size => '7'} %></td>
+    <% end %>
+  </tr>
+  <%end%>
+</table>
+</div>
+</div>
+<div id="footer">
+  <%= hidden_field_tag :game_id,@selected_game.id%>
+  <p class="leftalign" ><%= link_to "Back", scores_path, :class =>"back_button" %></p>
+  <p class="rightalign" ><%= link_to_function "Save", "check_score_save()", :class =>"button",:id=>"score_save_id" %></p>
+<% end %>
+</div>
+
+<script type="text/javascript">
+  if(isOnline()){  
+     db.transaction(
+        function(tx){
+                tx.executeSql('SELECT * from games where game_id=?',
+                [<%=@selected_game.id%>],
+                function(tx,results){
+                  if(results.rows.length==0){
+                    tx.executeSql('INSERT INTO GAMES(user_name,group_name,course_name,no_of_holes,course_id,user_id,group_id,game_id,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?);',
+                    ['<%= @selected_game.user.login%>','<%=@selected_game.group.name%>','<%=@selected_game.course.name%>','<%=@selected_game.course.holes%>',<%=@selected_game.course_id%>,<%=@selected_game.user_id%>,<%=@selected_game.group_id%>,<%=@selected_game.id%>,<%=@selected_game.status%>,'<%=@selected_game.created_at %>','<%=@selected_game.updated_at %>']
+                    );
+                  }
+            });
+      });
+
+     <%if @score %>
+         db.transaction(
+        function(tx) {
+            tx.executeSql('SELECT * from score where game_id=?;',
+            [<%=@selected_game.id%>],
+            function(tx,results){
+       <% @score.each do |s| %>
+            
+            if(results.rows.length == 0){
+                    tx.executeSql('INSERT INTO SCORE(score_id,game_id,user_id,user_name,course_hole_id,par,score,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?);',
+                    [<%=s.id%>,<%=s.game_id%>,<%=s.user_id%>,'<%=s.user.login%>',<%=s.course_hole_id%>,<%=s.course_hole.par%>,<%=s.score%>,'<%=s.created_at%>','<%=s.updated_at%>']
+                  );
+                }
+            else{
+                  tx.executeSql('UPDATE SCORE SET score=? WHERE score_id=?;',
+                  [<%=s.score%>,<%=s.id%>]);
+              }
+       <% end %>
+            }
+            );
+          });
+     <% end %>
+  }
+</script>

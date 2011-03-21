@@ -1,0 +1,26 @@
+<div id="header">
+  <p class="leftalign">Define Course </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %>&nbsp;&nbsp;<a id="online_status">status</a></p>
+</div>
+<div id="content">
+  <div class="text_box_design">
+    <h2 id="content_header"> Create new group </h2>
+    <p id="notice"><%= notice %></p>
+    <p>
+      <b>Name:</b>
+      <%= @group.name %>
+       <fieldset>
+         <legend>Group members</legend>
+         <% @users.each do |user| -%>
+            <%  if group_contains_user?(user) %>
+	        <%= user.login -%>
+            <%end%>
+         <%  end %>
+       </fieldset>
+    </p>
+  </div>
+</div>
+<div id="footer">
+  <p class="leftalign " ><%= link_to 'Back', groups_path,{:class =>"back_button" } %> </p>
+  <p class="rightalign " ><%= link_to 'Edit', edit_group_path(@group),{:class =>"button" } %> </p>
+</div>

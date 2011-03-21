@@ -1,0 +1,23 @@
+<div id="header">
+  <p class="leftalign">Define Course </p>
+  <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%></p>
+</div>
+<div id="content">
+  <div class="text_box_design" id="main_container">
+     <table id="course_detail_form">
+        <tr><th colspan="2">Course Details</th></tr>
+        <tr><th>Club </th><td><%= @course.name %></td></tr>
+        <tr><th>Name</th><td><%= @course.club %></td></tr>
+        <tr><th>Country </th><td><%= @course.country.name if @course.country %></td></tr>
+        <tr><th>State </th><td><%= @course.state.name if @course.state %></td></tr>
+        <tr><th>City </th><td><%= @course.city.name if @course.city%></td></tr>
+        <tr><th>Holes </th><td><%= @course.holes == 1 ? "Half" : " Full" %></td></tr>
+        <tr><th>Par </th><td><%= @course.par %></td></tr>
+      </table>
+  </div>
+</div>
+<div id="footer">
+    <p class="leftalign" ><%= link_to 'Back', courses_path ,:class => "back_button"%></p>
+    <p class="rightalign" ><%= link_to 'Edit', edit_course_path(@course),:class =>"button" %></p>
+</div>
+

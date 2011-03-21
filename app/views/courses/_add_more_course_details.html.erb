@@ -1,0 +1,15 @@
+<div class="course_hole_header">
+  <%=text_field f,:holes,:value =>'Holes',:size =>'10',:readonly => true ,:disabled =>true%><br />
+  <%=text_field f,:par,:value => 'Par',:size =>'10',:readonly => true ,:disabled =>true%><br />
+  <%=text_field f,:mens_hcp,:value => 'Mens HCP',:size =>'10',:readonly => true ,:disabled =>true%><br />
+  <%=text_field f,:ladies_hcp,:value => 'Ladies HCP',:size =>'10',:readonly => true ,:disabled =>true%><br />
+</div>
+<%  9.times { %>
+  <div  class="course_hole_list">
+    <%= text_field "course[course_holes_attributes][#{@i}]", :name,:value => @i,:size =>'1',:readonly => true%><br />
+    <%= text_field "course[course_holes_attributes][#{@i}]", :par, :value => ( f.course_holes[@i-1] ? f.course_holes[@i-1].par : ''), :size =>'1',:tabIndex => @i%><br />
+    <%= text_field "course[course_holes_attributes][#{@i}]", :mens_hcp,:value => ( f.course_holes[@i-1] ? f.course_holes[@i-1].mens_hcp : ''),:size =>'1',:tabIndex => @i%><br />
+    <%= text_field "course[course_holes_attributes][#{@i}]", :ladies_hcp,:value => ( f.course_holes[@i-1] ? f.course_holes[@i-1].ladies_hcp : ''),:size =>'1',:tabIndex => @i%><br />
+    <% @i += 1 %>
+  </div>
+<% } %>

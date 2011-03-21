@@ -1,0 +1,32 @@
+<%= form_tag :action => 'update' do %>
+<table border="1">
+  <tr>
+    <th rowspan="2">STROKE PLAY : <br /> Individaul HCP</th>
+    <% @get_course.each do |gc| %>
+     <th><b><%= gc.name %></b></th>
+    <% end %>
+   </tr>
+  <tr>
+    <% @get_course.each do |gc| %>
+     <th>Par :<%= gc.par %></th>
+    <% end %>
+  </tr>
+  <% @get_players.each do |gp| %>
+  <tr>
+    <td><%= gp.login.capitalize %></td>
+    <% @get_course.each do |gc| %>
+     <td><%=  text_field ("score["+gp.id.to_s+"]["+gc.id.to_s+"]").to_sym ,get_score(@selected_game.id,gc.id,gp.id),:size => '7' %></td>
+    <% end %>
+  </tr>
+  <%end%>
+
+</table>
+  <div class="actions">
+    <%= hidden_field_tag :game_id,@selected_game.id%>
+    <%= submit_tag 'Save' %>
+  </div>
+
+<%= link_to 'Back', scores_path %>
+
+<%= link_to 'Show', @score %> |
+<%= link_to 'Back', scores_path %>
