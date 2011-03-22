@@ -1,0 +1,22 @@
+ <table cellpadding="0" cellspacing="0">
+  <tr>
+    <% @get_course.each do |gc| %>
+       <th><%= gc.name %></th>
+    <% end %>
+   </tr>
+  <tr>
+    <% @get_course.each do |gc| %>
+     <th>Par :<%= gc.par %></th>
+    <% end %>
+  </tr>
+  <% @get_players.each do |gp| %>
+  <tr>
+    <% @get_course.each do |gc| %>
+    <%= puts gc.id%>
+    <%= puts gp.id%>
+    <%= puts get_score(@selected_game.id,gc.id,gp.id)%>
+     <td><%=  text_field ("score["+gp.id.to_s+"]["+gc.id.to_s+"]").to_sym ,nil,{:value => get_score(@selected_game.id,gc.id,gp.id) ,:size => '7' ,:onchange => 'track_score_changes('+gc.id.to_s+','+gp.id.to_s+')'} %></td>
+    <% end %>
+  </tr>
+  <%end%>
+</table>

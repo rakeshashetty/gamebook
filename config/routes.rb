@@ -15,7 +15,7 @@ Golf1::Application.routes.draw do
 
   resources :scores do
     member do
-      get 'sync_records'
+      get 'sync_records','update_request'
     end
   end
 

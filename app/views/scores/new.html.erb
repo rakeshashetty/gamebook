@@ -5,41 +5,22 @@
 <div id="content">
 <%= form_tag :action => 'create' do %>
 <div id="score_table_header">
-  <table cellpadding="0" cellspacing="0">
+  <table cellpadding="0" cellspacing="0" class="select_record_from_table">
     <tr><th>STROKE-PLAY : </th></tr>
     <tr><th>Individual-HCP</th></tr>
     <% @get_players.each do |gp| %>
-       <tr><td><%=link_to gp.login.capitalize,nil,{:class =>"player_button" }  %></td></tr>
+    <tr> <td><%=link_to gp.login.capitalize,nil,{:class =>"player_button" }  %></td></tr>
     <%end%>
   </table>
 </div>
 <div id="score_table_content">
- <table cellpadding="0" cellspacing="0">
-  <tr>
-    <% @get_course.each do |gc| %>
-       <th><%= gc.name %></th>
-    <% end %>
-   </tr>
-  <tr>
-    <% @get_course.each do |gc| %>
-     <th>Par :<%= gc.par %></th>
-    <% end %>
-  </tr>
-
-  <% @get_players.each do |gp| %>
-  <tr>
-    <% @get_course.each do |gc| %>
-     <td><%=  text_field ("score["+gp.id.to_s+"]["+gc.id.to_s+"]").to_sym ,nil,{:value => get_score(@selected_game.id,gc.id,gp.id) ,:size => '7'} %></td>
-    <% end %>
-  </tr>
-  <%end%>
-</table>
+  <%=render :partial=>'score_content'%>
 </div>
 </div>
 <div id="footer">
   <%= hidden_field_tag :game_id,@selected_game.id%>
   <p class="leftalign" ><%= link_to "Back", scores_path, :class =>"back_button" %></p>
-  <p class="rightalign" ><%= link_to_function "Save", "check_score_save()", :class =>"button",:id=>"score_save_id" %></p>
+  <p class="rightalign" ><%= link_to_function "Save", "check_score_save("+@selected_game.id.to_s+")", :class =>"button",:id=>"score_save_id" %></p>
 <% end %>
 </div>
 

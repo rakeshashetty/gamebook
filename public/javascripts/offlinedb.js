@@ -95,7 +95,7 @@ function check_score_save(game_id){
             });
     }
     else{
-        $("form").submit();
+            callAjax({url:'/scores/'+game_id+'/update_request',params:'score='+changed_scores,contentType:'application/json',elementId:'score_table_content',updater:true,message:'Record saved!!'});
     }
 }
 
@@ -172,12 +172,12 @@ function register_screen(){
 
 /*function to display new score page*/
 function new_score_show(game_id,updated_at){
-    if(isOnline()){
-        
-        db.transaction(
+       if(isOnline()){
+
+            db.transaction(
             function(tx){
-                
-                tx.executeSql('SELECT updated_at FROM games where game_id=? and updated_at > ?;',[game_id,updated_at],
+
+                    tx.executeSql('SELECT updated_at FROM games where game_id=? and updated_at > ?;',[game_id,updated_at],
                     function(tx,results){
                         if(results.rows.length == 0 ) redirect_to_path("/scores/new?game_id="+game_id);
                         else{
@@ -199,7 +199,7 @@ function new_score_show(game_id,updated_at){
                                             //game={id:1}
                                           
                                         }
-                                        callAjax({url:'/scores/'+game_id+'/sync_records',params:'game='+game+'&score='+score,method:'GET',contentType:'application/json',callbackfunction:'scorescreen('+game_id+')'});
+                                        callAjax({url:'/scores/'+game_id+'/sync_records',params:'game='+game+'&score='+score,contentType:'application/json',callbackfunction:'scorescreen('+game_id+')'});
                                 }
                                 );
                               }else{

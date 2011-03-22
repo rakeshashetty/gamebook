@@ -24,6 +24,7 @@ class ScoresController < ApplicationController
   # GET /scores/new
   # GET /scores/new.xml
   def new
+    puts "====================="
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @score }
@@ -98,13 +99,31 @@ class ScoresController < ApplicationController
     @game=Game.find(game[0].to_i)
     @game.updated_at = game[1]
     @game.save
+    render :nothing => true
+  end
+
+  def update_request
+    @update_game = params[:id]
+
+    @update_scores = params[:score].split(',')
+    i=0
+    while i < @update_scores.length-1 do
+     last_updated = Score.update_changed_score(@update_game,@update_scores[i],@update_scores[i+1],@update_scores[i+2])
+     i+=3
+    end
+    game=Game.find(@update_game)
+    game.updated_at = last_updated
+    game.save
+    params[:game_id]=params[:id]
+    get_game_details
+    render :partial=>'score_content'
   end
 
   private
 
   def get_game_details
     @selected_game = Game.find(params[:game_id]);
-    @score=Score.find(:all,:conditions =>["game_id = ?",params[:game_id]]);
+    #@score=Score.find(:all,:conditions =>["game_id = ?",params[:game_id]]);
     @get_players = Group.find(@selected_game.group_id).users
     @get_course  = Course.find(@selected_game.course_id).course_holes
   end

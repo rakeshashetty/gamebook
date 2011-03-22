@@ -4,22 +4,16 @@
 </div>
 <div id="content">
   <div class="text_box_design" id="main_container">
-<table>
+<table class="select_record_from_table">
   <tr>
     <th>Select Course</th>
-    <th></th>
   </tr>
-
 <% @courses.each do |course| %>
-  <tr class="select_record_from_table">
+    <tr  onclick="change_row_color(<%=course.id%>)" class="row_background_<%=course.id%>">
     <td><%= course.club %></td>
-    <td><%= link_to 'View Details',course_path(course.id) %> | <%= link_to 'Select',groups_path(:course_id => course.id) %></td>
-
-  </tr>
+    </tr>
 <% end %>
 </table>
-
-
  </div>
   <div id="help_info" class="align_content_screen text_box_design hidden">
      <p><h2> Create New Game</h2>
@@ -28,6 +22,7 @@
    </div>
 </div>
 <div id="footer">
+  <input type="hidden" id="course_value"></input>
   <p class="leftalign" ><%= link_to_function "Back","check_back_button('welcome')", {:class =>"back_button" } %></p>
-  <p class="rightalign" ><%= link_to "New Course",new_course_path, { :class =>"button" } %></p>
+  <p class="rightalign" ><%= link_to_function 'View',"get_selected_path('/courses/')" , {:class =>"button" }%>&nbsp;<%= link_to_function 'Select',"get_selected_path('/groups')" , {:class =>"button" }%>&nbsp;<%= link_to "+",new_course_path, { :class =>"button" } %></p>
 </div>

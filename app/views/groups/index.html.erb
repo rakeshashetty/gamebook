@@ -4,25 +4,27 @@
 </div>
 <div id="content">
   <div class="text_box_design">
-    <table>
+    <table class="select_record_from_table">
       <tr>
 	<th>Select Group</th>
-	<th></th>
       </tr>
       <% @groups.each do |group| %>
-	<tr>
+	<tr onclick="change_row_color(<%=group.id%>)" class="row_background_<%=group.id%>" >
 	  <td><%= group.name %></td>
-	  <td><%= link_to 'Show', group %>
-	    <% if @course %>
-	      | <%= link_to 'Start Game',add_group_to_game_group_path(group,:course_id => @course) %></td>
-	  <% end %>
+ 
 	</tr>
       <% end %>
     </table>
   </div>
 </div>
   <div id="footer">
+    <input type="hidden" id="group_value"></input>
     <p class="leftalign" ><%= link_to "Back",courses_path, {:class =>"back_button" } %></p>
-    <p class="rightalign" ><%= link_to_function "New Group",'redirect_to_path("/groups/new")', { :class =>"button" } %></p>
+    <p class="rightalign" ><%= link_to_function 'View', "get_selected_link('/groups/')" ,{:class =>"button" }%>&nbsp;
+    <% if @course %>
+      <%= link_to_function 'Game',"get_selected_link('/groups/',#{@course})" ,{:class =>"button" }%>
+    <% end %>
+    &nbsp;
+    <%= link_to_function "+",'redirect_to_path("/groups/new")', { :class =>"button" } %></p>
   </div>
 

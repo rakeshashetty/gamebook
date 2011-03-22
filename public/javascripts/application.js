@@ -5,6 +5,9 @@ $(document).ready(function() {
     $('#new_game').click(function(){
     redirect_to_path('/courses');
     });
+     $('#join_game').click(function(){
+    redirect_to_path('/scores');
+    });
     activatePlaceholders();
     window.onload=function() {
       activatePlaceholders();
@@ -34,16 +37,18 @@ $(document).ready(function() {
 
 /*Generalized function to call server through ajax*/
 function callAjax(options) {
+   alert('callAjax');
    $.ajax({
        url:options.url,
        data:options.params ? options.params : '',
-       method:options.method ? options.method : 'GET',
+       method:(options.method ? options.method : 'GET'),
        contentType:options.contentType ? options.contentType : 'application/x-www-form-urlencoded',
        datType:'html',
        async:true,
        success: function(response){
            if(options.updater) $('#' + options.elementId).html(response);
            else if(options.callbackfunction) eval(options.callbackfunction);
+           if(options.message) alert(options.message);
        }
    })
 }
@@ -292,4 +297,54 @@ for (var i=0;i<inputs.length;i++) {
    }
   }
 }
+}
+
+
+/*variables required to track color of a record*/
+var color;
+var prev_color;
+var prev_row_id;
+/* Function to change  row color */
+function change_row_color(row_id){
+      color=$('.row_background_'+row_id).css("background-color");
+      $('.row_background_'+prev_row_id).css("background-color",prev_color);
+      $('.row_background_'+row_id).css("background-color","#303030 ");
+      prev_color=color;
+      prev_row_id=row_id;
+      $('#course_value').val(row_id);
+      $('#group_value').val(row_id);
+}
+
+
+function get_selected_path(path){
+    if(!($('#course_value').val())) alert('No course is selected');
+    else{ 
+    course_id = $('#course_value').val();
+    if(path == "/courses/")path = path+course_id;
+    if(path=='/groups')path = path+"?course_id="+course_id ;
+    redirect_to_path(path);
+    }
+}
+
+function get_selected_link(path,course_id){
+    if(!($('#group_value').val())) alert('No group is selected');
+    else{
+    group_id = $('#group_value').val();
+    alert(course_id);
+    if(path=='/groups/' &&  course_id != undefined)path = path+group_id+"/add_group_to_game?course_id="+course_id ;
+    else if(path == "/groups/")path = path+group_id;
+    redirect_to_path(path);
+    }
+}
+
+/*variables required to store tracked changes*/
+var changed_scores = new Array();
+index=0;
+/*function to track changes in score fields*/
+function track_score_changes(course_id,players_id){
+    changed_scores[index++]=course_id;
+    changed_scores[index++]=players_id;
+    score = $('#score_'+players_id+'_'+course_id+'_').val();
+    changed_scores[index++]=score;
+
 }

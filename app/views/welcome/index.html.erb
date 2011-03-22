@@ -4,7 +4,7 @@
   <p class="rightalign"><%=  link_to_function "?" , "find_help()",:class =>"button", :id=>"help_button"%>&nbsp;<%= link_to_function 'Logout', 'logout_session()',:class => "button" %><a id="online_status">status</a></p>
 </div>
 <div id="content">
-  <div class="list_view_design" id="main_container">
+  <div class="list_view_design" id="main_container" >
     <p id="new_game" class="link_list">New Game</p>
     <p id="join_game" class="link_list">Join Game</p>
     <p id="my_games" class="link_list">My Games</p>
@@ -35,7 +35,7 @@ if(isOnline()){
                 function(tx,results){
                   if(results.rows.length==0){
                     tx.executeSql('INSERT INTO GAMES(user_name,group_name,course_name,no_of_holes,course_id,user_id,group_id,game_id,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?);',
-                    ['<%= game.user.login%>','<%=game.group.name%>','<%=game.course.name%>','<%=game.course.holes%>',<%=game.course_id%>,<%=game.user_id%>,<%=game.group_id%>,<%=game.id%>,<%=game.status%>,'<%=game.created_at %>','<%=game.updated_at %>']
+                    ['<%=game.user.login%>','<%=game.group.name%>','<%=game.course.name%>','<%=game.course.holes%>',<%=game.course_id%>,<%=game.user_id%>,<%=game.group_id%>,<%=game.id%>,<%=game.status%>,'<%=game.created_at %>','<%=game.updated_at %>']
                     );
                   }
             });

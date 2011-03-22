@@ -103,14 +103,14 @@ h3{
 table{
     background-color:#303030 ;
     width:100%;
+    border-spacing:0px;
 }
 
 table tr{
-    border-bottom:1px solid black;
+    border:0px; 
     text-align:left;
     color:white;
     line-height:28px;
-
 }
 
 table tr th{
@@ -122,8 +122,14 @@ table tr th{
 table tr td a{
     text-decoration:none;
     color:white;
+ 
 }
 
+.row_align_center tr{
+    text-align: center;
+    line-height: 35px;
+    
+}
 /* Design of Score Table */
 #score_content{
     background: -moz-linear-gradient(top, #333, #5e5e65);
@@ -156,7 +162,6 @@ table tr td a{
 .list_view_design p {
     background-color:#303030 ;
     color:white;
-    border-bottom:1px solid white;
     text-align: left;
     padding-left: 5px;
 }
@@ -166,7 +171,7 @@ table tr td a{
 
 
 .dropdown{
-    width:178px;
+    width: 200px;
     height:26px;
 }
 
@@ -201,3 +206,32 @@ table tr td a{
     line-height: 45px;
 }
 
+h2#content_header{
+    font-size:15px;
+    background-color: #080000;
+    margin: 0px 0px 5px 0px;
+    line-height: 30px;
+    border-top: 2px solid #303030
+}
+
+/* To change the row color different */
+table.select_record_from_table tr:nth-child(even) {background-color: #404040;}
+table.select_record_from_table tr:nth-child(odd) {background-color: #5E5E65;}
+
+/* To change list with each row different color */
+.list_view_design p:nth-child(even) {background-color: #404040;}
+.list_view_design p:nth-child(odd) {background-color: #5E5E65;}
+
+td a{
+     color: #fff;
+    -webkit-border-image: url(/images/button.png) 0 5 0 5;
+    -moz-border-image: url(/images/button.png) 0 5 0 5;  
+    text-decoration:none;
+    text-align: center;
+    line-height: 30px;
+    padding:5px;
+}
+
+tr onclick{
+
+}
